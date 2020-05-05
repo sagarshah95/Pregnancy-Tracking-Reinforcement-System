@@ -1,0 +1,381 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package userinterface.DoctorRole;
+
+import Business.EcoSystem;
+import Business.Enterprise.Enterprise;
+import Business.Organization.Organization;
+import Business.Organization.DoctorOrganization;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.DoctorWorkRequest;
+import Business.WorkQueue.LabTestWorkRequest;
+import Business.WorkQueue.MachineryWorkRequest;
+import Business.WorkQueue.WorkRequest;
+import Business.WorkQueue.medicineWorkFlowRequest;
+import Business.WorkQueue.medicineWorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import userinterface.MachineryRole.ProcessMachineryRequestJPanel;
+
+/**
+ *
+ * @author raunak
+ */
+public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
+
+    private JPanel userProcessContainer;
+    private DoctorOrganization organization;
+    private Enterprise enterprise;
+    private UserAccount userAccount;
+    private EcoSystem business;
+    private Organization org;
+    /**
+     * Creates new form DoctorWorkAreaJPanel
+     */
+    public DoctorWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
+        initComponents();
+        
+        this.userProcessContainer = userProcessContainer;
+        this.organization = (DoctorOrganization)organization;
+        this.enterprise = enterprise;
+        this.userAccount = account;
+        this.business=business;
+        valueLabel.setText(enterprise.getName());
+        populateWorkQueueTable();
+        //populateRequestTable();
+        //populateMedicineRequestTable();
+        //populateMedicineRequestTable();
+    }
+    public void populateWorkQueueTable() {
+
+        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+
+        model.setRowCount(0);
+
+        for (WorkRequest work : organization.getWorkQueue().getWorkRequestList()) {
+            if (work instanceof DoctorWorkRequest) {
+                DoctorWorkRequest doctorWorkRequest = (DoctorWorkRequest) work;
+                Object[] row = new Object[4];
+                row[0] = doctorWorkRequest;
+                row[1] = doctorWorkRequest.getSender();
+                row[2] = doctorWorkRequest.getReceiver();
+                // row[3] = medicineSupplierWorkRequest.getMedicine().getQuantity();
+                row[3] = doctorWorkRequest.getStatus();
+                model.addRow(row);
+            }
+        }
+
+    }
+    /*public void populateMedicineRequestTable(){
+        DefaultTableModel model1 = (DefaultTableModel) workRequestJTable.getModel();
+        String medicine = null;
+        model1.setRowCount(0);
+        for(WorkRequest medinicinRequest : userAccount.getWorkQueue().getWorkRequestList()){
+            Object[] row = new Object[4];
+            row[0] = 
+        }
+    }*/
+    
+    /*public void populateRequestTable(){
+        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+        String result = null;
+        model.setRowCount(0);
+        for (WorkRequest request : userAccount.getWorkQueue().getWorkRequestList()){
+            Object[] row = new Object[4];
+            row[0] = request.getMessage();
+            row[1] = request.getReceiver();
+            row[2] = request.getStatus();
+            if(request instanceof LabTestWorkRequest)
+                result = ((LabTestWorkRequest) request).getTestResult();
+            /*else if (request instanceof medicineWorkRequest)
+                result = ((medicineWorkRequest) request).getMediName();
+            row[3] = result == null ? "Waiting" : result;
+            
+            model.addRow(row);
+        }
+    }*/
+    
+    /*public void populateMedicineRequestTable(){
+        DefaultTableModel dtm = (DefaultTableModel) medicineRequestJTable1.getModel();
+        String response = null;
+        
+        dtm.setRowCount(0);
+        for(WorkRequest request : userAccount.getWorkQueue().getWorkRequestList()){
+            if(request instanceof medicineWorkFlowRequest){
+            Object[] row = new Object[5];
+            
+            medicineWorkFlowRequest mediRequest = (medicineWorkFlowRequest)request;
+            row[0] = mediRequest;
+            row[1] = mediRequest.getQty();
+            row[2] = mediRequest.getStatus();
+            row[3] = mediRequest.getReceiver();
+            /*if (request instanceof medicineWorkFlowRequest)
+                response = ((medicineWorkRequest) request).getMediName();
+            row[4] = response == null ? "Waiting" : response;
+            
+            dtm.addRow(row);
+            }
+        }
+        
+    }*/
+
+    
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        enterpriseLabel = new javax.swing.JLabel();
+        valueLabel = new javax.swing.JLabel();
+        requestMedicinejButton = new javax.swing.JButton();
+        requestMachineryjButton1 = new javax.swing.JButton();
+        requestFundsFromSponsorjButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        workRequestJTable = new javax.swing.JTable();
+        assignBtn = new javax.swing.JButton();
+        processjButton1 = new javax.swing.JButton();
+        refreshTestJButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        requestFundfromBankjButton2 = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(204, 255, 204));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        enterpriseLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        enterpriseLabel.setText("EnterPrise :");
+        add(enterpriseLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 127, 30));
+
+        valueLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        valueLabel.setText("<value>");
+        add(valueLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 158, 26));
+
+        requestMedicinejButton.setBackground(new java.awt.Color(0, 0, 0));
+        requestMedicinejButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        requestMedicinejButton.setForeground(new java.awt.Color(255, 255, 255));
+        requestMedicinejButton.setText("Request Medicine");
+        requestMedicinejButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestMedicinejButtonActionPerformed(evt);
+            }
+        });
+        add(requestMedicinejButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 150, -1));
+
+        requestMachineryjButton1.setBackground(new java.awt.Color(0, 0, 0));
+        requestMachineryjButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        requestMachineryjButton1.setForeground(new java.awt.Color(255, 255, 255));
+        requestMachineryjButton1.setText("Request Machinery");
+        requestMachineryjButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestMachineryjButton1ActionPerformed(evt);
+            }
+        });
+        add(requestMachineryjButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 158, -1));
+
+        requestFundsFromSponsorjButton1.setBackground(new java.awt.Color(0, 0, 0));
+        requestFundsFromSponsorjButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        requestFundsFromSponsorjButton1.setForeground(new java.awt.Color(255, 255, 255));
+        requestFundsFromSponsorjButton1.setText("Request Funds to Sponsor");
+        requestFundsFromSponsorjButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestFundsFromSponsorjButton1ActionPerformed(evt);
+            }
+        });
+        add(requestFundsFromSponsorjButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 280, 210, -1));
+
+        workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Patient Name", "Sender", "Receiver", "Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(workRequestJTable);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 610, 160));
+
+        assignBtn.setBackground(new java.awt.Color(0, 0, 0));
+        assignBtn.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        assignBtn.setForeground(new java.awt.Color(255, 255, 255));
+        assignBtn.setText("Assign To Me");
+        assignBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assignBtnActionPerformed(evt);
+            }
+        });
+        add(assignBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 150, -1));
+
+        processjButton1.setBackground(new java.awt.Color(0, 0, 0));
+        processjButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        processjButton1.setForeground(new java.awt.Color(255, 255, 255));
+        processjButton1.setText("Process");
+        processjButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                processjButton1ActionPerformed(evt);
+            }
+        });
+        add(processjButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 160, -1));
+
+        refreshTestJButton.setBackground(new java.awt.Color(0, 0, 0));
+        refreshTestJButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        refreshTestJButton.setForeground(new java.awt.Color(255, 255, 255));
+        refreshTestJButton.setText("Refresh");
+        refreshTestJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshTestJButtonActionPerformed(evt);
+            }
+        });
+        add(refreshTestJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 150, -1));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText("Doctor Work Area Screen");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, -1, -1));
+
+        requestFundfromBankjButton2.setBackground(new java.awt.Color(0, 0, 0));
+        requestFundfromBankjButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        requestFundfromBankjButton2.setForeground(new java.awt.Color(255, 255, 255));
+        requestFundfromBankjButton2.setText("Request Funds to Bank");
+        requestFundfromBankjButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestFundfromBankjButton2ActionPerformed(evt);
+            }
+        });
+        add(requestFundfromBankjButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 330, 210, -1));
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void requestMedicinejButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestMedicinejButtonActionPerformed
+        // TODO add your handling code here:
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.add("RequestMedicinesJPanel", new RequestMedicinesJPanel(userProcessContainer, userAccount, enterprise));
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_requestMedicinejButtonActionPerformed
+
+    private void requestMachineryjButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestMachineryjButton1ActionPerformed
+        // TODO add your handling code here:
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.add("RequestMachineryJPanel", new RequestMachineryJPanel(userProcessContainer, userAccount, enterprise));
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_requestMachineryjButton1ActionPerformed
+
+    private void requestFundsFromSponsorjButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestFundsFromSponsorjButton1ActionPerformed
+        // TODO add your handling code here:
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.add("RequestForFundsToSponsor", new RequestForFundsToSponsor(userProcessContainer, userAccount, organization, enterprise, business));
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_requestFundsFromSponsorjButton1ActionPerformed
+
+    private void assignBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignBtnActionPerformed
+
+        /*  CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.add("RequestLabTestJPanel", new RequestLabTestJPanel(userProcessContainer, userAccount, enterprise));
+        layout.next(userProcessContainer); */
+      /*  int selectedRow = workRequestJTable.getSelectedRow();
+
+        if (selectedRow < 0){
+            return;
+        }
+
+        WorkRequest request = (WorkRequest)workRequestJTable.getValueAt(selectedRow, 0);
+        request.setReceiver(userAccount);
+        request.setStatus("Pending");
+        populateWorkQueueTable();*/
+      
+int selectedRow = workRequestJTable.getSelectedRow();
+        int count = 0;
+
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null, "Please select a row");
+        }
+       
+        for(WorkRequest req : organization.getWorkQueue().getWorkRequestList()){
+            if(req instanceof DoctorWorkRequest){
+                if(req.getStatus().equals("Pending")){
+                    count = count+1;
+                }
+            }
+        }
+       
+        if(count >= 1){
+            JOptionPane.showMessageDialog(null, "You can not accept more than one patient at a time");
+        }
+       
+        else{
+
+        WorkRequest request = (WorkRequest)workRequestJTable.getValueAt(selectedRow, 0);
+        request.setReceiver(userAccount);
+        request.setStatus("Pending");
+        }
+        //count = count+1;
+       
+        populateWorkQueueTable();
+    }//GEN-LAST:event_assignBtnActionPerformed
+
+    private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
+         populateWorkQueueTable();
+        // populateRequestTable();
+    }//GEN-LAST:event_refreshTestJButtonActionPerformed
+
+    private void processjButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processjButton1ActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = workRequestJTable.getSelectedRow();
+
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null, "Select a row");
+        }
+
+        DoctorWorkRequest request = (DoctorWorkRequest)workRequestJTable.getValueAt(selectedRow, 0);
+
+        request.setStatus("Processing");
+
+        ProcessDoctorRequestJPanel processDoctorRequestJPanel = new ProcessDoctorRequestJPanel(userProcessContainer, request);
+        userProcessContainer.add("ProcessDoctorRequestJPanel", processDoctorRequestJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+        
+    }//GEN-LAST:event_processjButton1ActionPerformed
+
+    private void requestFundfromBankjButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestFundfromBankjButton2ActionPerformed
+        // TODO add your handling code here:
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.add("RequestForFundsToBank", new RequestForFundsToBank(userProcessContainer, userAccount, organization, enterprise, business));
+        layout.next(userProcessContainer);
+    }//GEN-LAST:event_requestFundfromBankjButton2ActionPerformed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton assignBtn;
+    private javax.swing.JLabel enterpriseLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton processjButton1;
+    private javax.swing.JButton refreshTestJButton;
+    private javax.swing.JButton requestFundfromBankjButton2;
+    private javax.swing.JButton requestFundsFromSponsorjButton1;
+    private javax.swing.JButton requestMachineryjButton1;
+    private javax.swing.JButton requestMedicinejButton;
+    private javax.swing.JLabel valueLabel;
+    private javax.swing.JTable workRequestJTable;
+    // End of variables declaration//GEN-END:variables
+}
